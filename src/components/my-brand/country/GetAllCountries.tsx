@@ -3,8 +3,34 @@ import CategoryList from "../../utils/dropdowns/CategoryList";
 import EmployeeLength from "../../utils/dropdowns/EmployeeLength";
 import ProductStock from "../../utils/dropdowns/ProductStock";
 import ProductType from "../../utils/dropdowns/ProductType";
+import {CountryDTO} from "../../../DTOs/country/country.dto.ts";
+import {useEffect, useState} from "react";
+import CountryService from "../../../services/country.service.ts";
 
 const GetAllCountries = () => {
+  const [countries, setCountries] = useState<CountryDTO[]>([]);
+  const [loading, setLoading] = useState<boolean>(true);
+  const [error, setError] = useState<string | null>(null);
+
+  useEffect(() => {
+    const fetchCountries = async () => {
+      try {
+        const response: CountryDTO[] = await CountryService.getAllCountries();
+        setCountries(response);
+      } catch (err) {
+        setError((err as Error).message);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    void fetchCountries(); // Ensure it's executed without returning a promise to useEffect
+  }, []);
+
+
+  if (loading) return <p>Loading...</p>;
+  if (error) return <p>Error: {error}</p>;
+
   return (
     <div className="col-12">
       <div className="">
@@ -70,55 +96,21 @@ const GetAllCountries = () => {
                       />
                     </div>
                   </th>
-                  <th>Product</th>
-                  <th>SKU</th>
-                  <th>Stock</th>
-                  <th>Price</th>
-                  <th>Sales</th>
-                  <th>Rating</th>
-                  <th>Published</th>
+                  <th>id</th>
+                  <th>Name</th>
                   <th>Action</th>
                 </tr>
               </thead>
               <tbody>
-                <tr>
+              {countries.map((country) => (
+                <tr key={country.id}>
                   <td>
                     <div className="form-check">
-                      <input className="form-check-input" type="checkbox" />
+                      <input className="form-check-input" type="checkbox"/>
                     </div>
                   </td>
-                  <td>
-                    <div className="table-product-card">
-                      <div className="part-img">
-                        <img src="./img/bg-img/product-img-1.jpg" alt="Image" />
-                      </div>
-                      <div className="part-txt">
-                        <span className="product-name">
-                          A4TECH BH300 Bluetooth Wireless Headset
-                        </span>
-                        <span className="product-category">
-                          Category: electronics/music
-                        </span>
-                      </div>
-                    </div>
-                  </td>
-                  <td>CSJ0158</td>
-                  <td>12</td>
-                  <td>$560</td>
-                  <td>256</td>
-                  <td>
-                    <div className="rating">
-                      <div className="star">
-                        <i className="fa-sharp fa-solid fa-star starred"></i>
-                        <i className="fa-sharp fa-solid fa-star starred"></i>
-                        <i className="fa-sharp fa-solid fa-star starred"></i>
-                        <i className="fa-sharp fa-solid fa-star starred"></i>
-                        <i className="fa-sharp fa-solid fa-star"></i>
-                      </div>
-                      <div className="rating-amount">(42)</div>
-                    </div>
-                  </td>
-                  <td>12/24/2023 01:05 PM</td>
+                  <td>{country.id}</td>
+                  <td>{country.name}</td>
                   <td>
                     <div className="btn-box">
                       <button>
@@ -133,108 +125,7 @@ const GetAllCountries = () => {
                     </div>
                   </td>
                 </tr>
-                <tr>
-                  <td>
-                    <div className="form-check">
-                      <input className="form-check-input" type="checkbox" />
-                    </div>
-                  </td>
-                  <td>
-                    <div className="table-product-card">
-                      <div className="part-img">
-                        <img src="./img/bg-img/product-img-4.jpg" alt="Image" />
-                      </div>
-                      <div className="part-txt">
-                        <span className="product-name">Premium Blend Tea</span>
-                        <span className="product-category">
-                          Category: Drink/tea
-                        </span>
-                      </div>
-                    </div>
-                  </td>
-                  <td>CSJ0158</td>
-                  <td>22</td>
-                  <td>$160</td>
-                  <td>756</td>
-                  <td>
-                    <div className="rating">
-                      <div className="star">
-                        <i className="fa-sharp fa-solid fa-star starred"></i>
-                        <i className="fa-sharp fa-solid fa-star starred"></i>
-                        <i className="fa-sharp fa-solid fa-star starred"></i>
-                        <i className="fa-sharp fa-solid fa-star starred"></i>
-                        <i className="fa-sharp fa-solid fa-star"></i>
-                      </div>
-                      <div className="rating-amount">(380)</div>
-                    </div>
-                  </td>
-                  <td>10/21/2022 01:05 PM</td>
-                  <td>
-                    <div className="btn-box">
-                      <button>
-                        <i className="fa-light fa-eye"></i>
-                      </button>
-                      <button>
-                        <i className="fa-light fa-pen"></i>
-                      </button>
-                      <button>
-                        <i className="fa-light fa-trash"></i>
-                      </button>
-                    </div>
-                  </td>
-                </tr>
-                <tr>
-                  <td>
-                    <div className="form-check">
-                      <input className="form-check-input" type="checkbox" />
-                    </div>
-                  </td>
-                  <td>
-                    <div className="table-product-card">
-                      <div className="part-img">
-                        <img src="./img/bg-img/product-img-3.jpg" alt="Image" />
-                      </div>
-                      <div className="part-txt">
-                        <span className="product-name">
-                          Chris Adams Body Spray Classic Denim
-                        </span>
-                        <span className="product-category">
-                          Category: Fashion/perfume
-                        </span>
-                      </div>
-                    </div>
-                  </td>
-                  <td>CSJ0158</td>
-                  <td>12</td>
-                  <td>$560</td>
-                  <td>256</td>
-                  <td>
-                    <div className="rating">
-                      <div className="star">
-                        <i className="fa-sharp fa-solid fa-star starred"></i>
-                        <i className="fa-sharp fa-solid fa-star starred"></i>
-                        <i className="fa-sharp fa-solid fa-star starred"></i>
-                        <i className="fa-sharp fa-solid fa-star starred"></i>
-                        <i className="fa-sharp fa-solid fa-star"></i>
-                      </div>
-                      <div className="rating-amount">(42)</div>
-                    </div>
-                  </td>
-                  <td>12/24/2023 01:05 PM</td>
-                  <td>
-                    <div className="btn-box">
-                      <button>
-                        <i className="fa-light fa-eye"></i>
-                      </button>
-                      <button>
-                        <i className="fa-light fa-pen"></i>
-                      </button>
-                      <button>
-                        <i className="fa-light fa-trash"></i>
-                      </button>
-                    </div>
-                  </td>
-                </tr>
+              ))}
               </tbody>
             </table>
           </div>

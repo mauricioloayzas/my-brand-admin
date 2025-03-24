@@ -6,7 +6,7 @@ const CountryPage = () => {
       <div className="col-12">
         <div className="panel">
           <div className="panel-header">
-            <h5>Data Tables</h5>
+            <h5>Countries manage</h5>
           </div>
           <div className="panel-body">
             <div className="row g-3">
