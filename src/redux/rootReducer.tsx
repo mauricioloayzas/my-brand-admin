@@ -13,6 +13,7 @@ import expandMailModalReducer from "./features/expandMailModalSlice";
 import createFolderModalReducer from "./features/createFolderModalSlice";
 import uploadFileModalReducer from "./features/uploadFileModalSlice";
 import fileDetailModalReducer from "./features/fileDetailModalSlice";
+import CreateCountryModalReducer from "./my-brand/createCountryModalSlice"
 
 const rootReducer = combineReducers({
   theme: themeReducer,
@@ -28,6 +29,7 @@ const rootReducer = combineReducers({
   uploadFileModal: uploadFileModalReducer,
   createFolderModal: createFolderModalReducer,
   fileDetailModal: fileDetailModalReducer,
+  createCountryModal: CreateCountryModalReducer
 });
 
 export type RootState = ReturnType<typeof rootReducer>;

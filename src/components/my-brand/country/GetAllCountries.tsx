@@ -6,11 +6,16 @@ import ProductType from "../../utils/dropdowns/ProductType";
 import {CountryDTO} from "../../../DTOs/country/country.dto.ts";
 import {useEffect, useState} from "react";
 import CountryService from "../../../services/country.service.ts";
+import {useAppDispatch} from "../../../redux/hooks.ts";
+import {toggleCreateCountryModalOpen} from "../../../redux/my-brand/createCountryModalSlice.tsx";
+
 
 const GetAllCountries = () => {
   const [countries, setCountries] = useState<CountryDTO[]>([]);
   const [loading, setLoading] = useState<boolean>(true);
   const [error, setError] = useState<string | null>(null);
+
+  const dispatch = useAppDispatch();
 
   useEffect(() => {
     const fetchCountries = async () => {
@@ -31,17 +36,29 @@ const GetAllCountries = () => {
   if (loading) return <p>Loading...</p>;
   if (error) return <p>Error: {error}</p>;
 
+  const openCreateCountryModal = () => {
+    console.log("openCreateCountryModal");
+    dispatch(toggleCreateCountryModalOpen());
+    console.log("openCreateCountryModal 2");
+  };
   return (
     <div className="col-12">
       <div className="">
         <div className="border-bottom pb-2 fw-bold text-dark mb-4 card-header">
-          Countries
+          <div className="row">
+            <div className="col-10">Countries</div>
+            <div className="col-2">
+              <button className="btn btn-sm btn-success w-100 h-100" onClick={openCreateCountryModal}>
+                New Country
+              </button>
+            </div>
+          </div>
         </div>
         <div className="card-body">
           <div className="table-filter-option">
             <div className="row g-3">
               <div className="col-xl-9 col-md-8">
-                <div className="row g-3">
+              <div className="row g-3">
                   <div className="col">
                     <form className="row g-2">
                       <div className="col">

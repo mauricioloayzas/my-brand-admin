@@ -9,6 +9,7 @@ import ExpandMailModal from "../modal/ExpandMailModal";
 import UploadFileModal from "../modal/UploadFileModal";
 import CreateFolderModal from "../modal/CreateFolderModal";
 import FileDetailsModal from "../modal/FileDetailsModal";
+import CreateCountryModal from "../my-brand/country/CreateCountryModal";
 
 const HomePageLayout = () => {
   const location = useLocation();
@@ -27,6 +28,8 @@ const HomePageLayout = () => {
       <UploadFileModal />
       <CreateFolderModal />
       <FileDetailsModal />
+
+      <CreateCountryModal />
     </main>
   );
 };
